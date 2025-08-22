@@ -1,0 +1,7 @@
+fastapi==0.112.0
+uvicorn[standard]==0.30.5
+pydantic==2.8.2
+gTTS==2.5.1
+pyttsx3==2.90
+pydub==0.25.1
+python-multipart==0.0.9

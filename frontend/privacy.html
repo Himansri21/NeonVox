@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeonVox — Privacy Policy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: dark; }
+    body { background:#0b0f17; color:#fff; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; }
+    .glass { backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body class="min-h-screen">
+  <main class="mx-auto max-w-3xl p-6 mt-10 glass rounded-3xl">
+    <h1 class="text-4xl font-extrabold">Privacy Policy</h1>
+    <p class="mt-4 opacity-80">Effective date: <span id="date"></span></p>
+
+    <h2 class="mt-8 text-2xl font-bold">What we process</h2>
+    <p class="mt-2 opacity-90">Text you submit is sent to our server solely to generate audio. We do not build user profiles.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Retention</h2>
+    <p class="mt-2 opacity-90">Input text and generated audio are kept only in memory long enough to produce your download. We do not persist them to disk or a database, except transient temp files during processing which are deleted automatically.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Third‑party services</h2>
+    <p class="mt-2 opacity-90">If you choose the <strong>gTTS</strong> engine, text is sent to Google Text‑to‑Speech to create audio. Offline engine (<strong>pyttsx3</strong>) does not send text to third parties.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Logs</h2>
+    <p class="mt-2 opacity-90">We keep minimal server logs (timestamp, success/error, engine used). We do not log the text contents.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Security</h2>
+    <p class="mt-2 opacity-90">Transport is protected via HTTPS. We enforce request size limits and input validation to reduce abuse.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Your rights</h2>
+    <p class="mt-2 opacity-90">Contact us to inquire about data practices or to report an issue: <a href="mailto:owner@example.com" class="text-cyan-300 underline">owner@example.com</a>.</p>
+
+    <h2 class="mt-6 text-2xl font-bold">Copyright</h2>
+    <p class="mt-2 opacity-90">Use only text you have the right to synthesize. Site visuals are custom CSS/SVG without third‑party images to avoid copyright concerns.</p>
+
+    <p class="mt-10 text-sm opacity-70">This policy may evolve as features change.</p>
+  </main>
+  <script>document.getElementById('date').textContent = new Date().toISOString().slice(0,10);</script>
+</body>
+</html>

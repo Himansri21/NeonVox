@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeonVox — Text → MP3</title>
+  <meta name="description" content="Turn your words into slick MP3 voiceovers with a futuristic vibe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { height: 100%; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; background:#0b0f17; }
+    /* Futuristic background */
+    .bg-neon {
+      position: fixed; inset: 0; z-index: -1; overflow: hidden; background: radial-gradient(1200px 800px at 10% 10%, rgba(0,255,255,0.15), transparent), radial-gradient(1000px 700px at 90% 20%, rgba(255,0,200,0.15), transparent), #0b0f17;
+    }
+    .orb { position:absolute; filter: blur(50px); opacity:.5; }
+    .orb1 { width:420px; height:420px; left:-80px; top:-60px; background: #00e5ff33; }
+    .orb2 { width:480px; height:480px; right:-120px; top:140px; background: #ff00e033; }
+    .glass { backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.15); }
+    .focus-outline:focus { outline: 3px solid #22d3ee; outline-offset: 2px; }
+  </style>
+</head>
+<body class="min-h-full text-white selection:bg-cyan-300/30 selection:text-cyan-100">
+  <div class="bg-neon" aria-hidden="true">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="pt-6">
+    <nav class="mx-auto max-w-7xl px-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-extrabold tracking-tight">NeonVox</a>
+      <div class="flex gap-4 text-sm">
+        <a class="opacity-80 hover:opacity-100 focus-outline rounded px-2 py-1" href="#generator">Generator</a>
+        <a class="opacity-80 hover:opacity-100 focus-outline rounded px-2 py-1" href="#batch">Batch</a>
+        <a class="opacity-80 hover:opacity-100 focus-outline rounded px-2 py-1" href="./privacy.html">Privacy</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-7xl px-4 mt-16 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
+        Turn your text into <span class="text-cyan-300">buttery MP3s</span>.
+      </h1>
+      <p class="mt-4 text-cyan-100/80 text-lg">
+        NeonVox blends <strong>online</strong> and <strong>offline</strong> speech engines behind a neon‑glow UI. Paste your script, pick a vibe, and go.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#generator" class="focus-outline rounded-xl px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold shadow-lg shadow-cyan-500/20">Start generating</a>
+        <a href="#batch" class="focus-outline rounded-xl px-6 py-3 glass">Batch from CSV</a>
+      </div>
+      <p class="mt-4 text-xs opacity-70">No stock photos used; visuals are pure CSS/SVG to avoid copyright issues.</p>
+    </div>
+    <div class="relative">
+      <div class="glass rounded-3xl p-1">
+        <svg class="w-full h-full" viewBox="0 0 600 400" role="img" aria-label="Futuristic wave illustration">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#a855f7" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="400" rx="24" fill="url(#g1)" opacity="0.08"/>
+          <g fill="none" stroke="url(#g1)" stroke-width="2">
+            <path d="M0,300 C100,250 200,350 300,300 400,250 500,350 600,300" opacity="0.8"/>
+            <path d="M0,250 C100,200 200,300 300,250 400,200 500,300 600,250" opacity="0.5"/>
+            <path d="M0,200 C100,150 200,250 300,200 400,150 500,250 600,200" opacity="0.3"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Generator -->
+  <section id="generator" class="mx-auto max-w-4xl px-4 mt-20">
+    <div class="glass rounded-3xl p-6 md:p-10">
+      <h2 class="text-3xl font-extrabold">Instant Generator</h2>
+      <p class="mt-2 opacity-80">Paste text, pick engine, download MP3. Easy, breezy, neon‑squeezy.</p>
+
+      <form id="tts-form" class="mt-6 space-y-4" aria-describedby="form-help">
+        <div>
+          <label for="text" class="block font-semibold">Your text</label>
+          <textarea id="text" name="text" required rows="6" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-4 focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Type or paste your script here…"></textarea>
+          <p id="form-help" class="mt-1 text-xs opacity-70">Tip: keep under 2000 characters for best results.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label for="engine" class="block font-semibold">Engine</label>
+            <select id="engine" name="engine" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+              <option value="gtts">gTTS (MP3, online)</option>
+              <option value="pyttsx3">pyttsx3 (MP3, offline on server)</option>
+            </select>
+          </div>
+          <div>
+            <label for="lang" class="block font-semibold">Language (gTTS)</label>
+            <input id="lang" name="lang" value="en" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="voice" class="block font-semibold">Voice preference (pyttsx3)</label>
+            <input id="voice" name="voice" placeholder="male / female / name" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label for="rate" class="block font-semibold">Rate (pyttsx3)</label>
+            <input id="rate" name="rate" type="number" min="80" max="300" step="5" placeholder="e.g., 185" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="volume" class="block font-semibold">Volume (0.0–1.0)</label>
+            <input id="volume" name="volume" type="number" min="0" max="1" step="0.05" placeholder="0.95" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div class="flex items-end">
+            <button type="submit" class="w-full rounded-xl px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold shadow-lg shadow-cyan-500/20" id="generate-btn">Generate MP3</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="result" class="mt-6 hidden">
+        <h3 class="font-bold mb-2">Your audio</h3>
+        <audio id="audio" controls class="w-full"></audio>
+        <div class="mt-3 flex gap-3">
+          <a id="download" class="focus-outline rounded-xl px-4 py-2 glass" download="neonvox.mp3">Download MP3</a>
+          <button id="reset" class="focus-outline rounded-xl px-4 py-2 glass">Reset</button>
+        </div>
+      </div>
+
+      <div id="status" role="status" class="mt-4 text-sm opacity-80"></div>
+    </div>
+  </section>
+
+  <!-- Batch CSV -->
+  <section id="batch" class="mx-auto max-w-4xl px-4 mt-16 mb-24">
+    <div class="glass rounded-3xl p-6 md:p-10">
+      <h2 class="text-3xl font-extrabold">Batch from CSV</h2>
+      <p class="mt-2 opacity-80">Upload a CSV with columns <code>filename</code> and <code>script_text</code>. Get a ZIP of MP3s back.</p>
+
+      <form id="csv-form" class="mt-6 grid md:grid-cols-2 gap-4">
+        <div>
+          <label for="csv" class="block font-semibold">CSV file</label>
+          <input id="csv" name="csv" type="file" accept=".csv" required class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="csv-engine" class="block font-semibold">Engine</label>
+            <select id="csv-engine" name="engine" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+              <option value="gtts">gTTS</option>
+              <option value="pyttsx3">pyttsx3</option>
+            </select>
+          </div>
+          <div>
+            <label for="csv-lang" class="block font-semibold">Language</label>
+            <input id="csv-lang" name="lang" value="en" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="csv-voice" class="block font-semibold">Voice</label>
+            <input id="csv-voice" name="voice" placeholder="male / female / name" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="csv-rate" class="block font-semibold">Rate</label>
+            <input id="csv-rate" name="rate" type="number" min="80" max="300" step="5" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="csv-volume" class="block font-semibold">Volume</label>
+            <input id="csv-volume" name="volume" type="number" min="0" max="1" step="0.05" class="mt-2 w-full rounded-xl bg-black/40 border border-white/15 p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          <button type="submit" class="w-full rounded-xl px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold shadow-lg shadow-cyan-500/20">Generate ZIP</button>
+        </div>
+      </form>
+      <div id="csv-status" role="status" class="mt-4 text-sm opacity-80"></div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-8 text-center text-xs opacity-70">
+    © <span id="year"></span> NeonVox — Built with love and lasers.
+  </footer>
+
+  <script>
+    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'http://localhost:8000' : '';
+
+    const $ = (s) => document.querySelector(s);
+    const statusEl = $('#status');
+
+    // Single generator
+    $('#tts-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = $('#text').value.trim();
+      if (!text) return;
+      const engine = $('#engine').value;
+      const lang = $('#lang').value || 'en';
+      const voice = $('#voice').value || null;
+      const rate = $('#rate').value ? Number($('#rate').value) : null;
+      const volume = $('#volume').value ? Number($('#volume').value) : null;
+
+      const btn = $('#generate-btn');
+      btn.disabled = true; btn.textContent = 'Generating…';
+      statusEl.textContent = 'Synthesizing your MP3…';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/tts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, engine, lang, voice, rate, volume })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(()=>({detail:'Unknown error'}));
+          throw new Error(err.detail || 'Failed to generate audio');
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        $('#audio').src = url;
+        $('#download').href = url;
+        $('#result').classList.remove('hidden');
+        statusEl.textContent = 'Done! Preview or download your MP3.';
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Error: ' + (err.message || err);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Generate MP3';
+      }
+    });
+
+    $('#reset').addEventListener('click', () => {
+      $('#audio').src = '';
+      $('#download').removeAttribute('href');
+      $('#result').classList.add('hidden');
+      statusEl.textContent = '';
+    });
+
+    // Batch CSV
+    $('#csv-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = $('#csv').files[0];
+      if (!f) return;
+      const fd = new FormData();
+      fd.append('file', f);
+      fd.append('engine', $('#csv-engine').value);
+      fd.append('lang', $('#csv-lang').value || 'en');
+      fd.append('voice', $('#csv-voice').value || '');
+      fd.append('rate', $('#csv-rate').value || '');
+      fd.append('volume', $('#csv-volume').value || '');
+
+      const el = $('#csv-status');
+      el.textContent = 'Processing CSV…';
+      try {
+        const res = await fetch(`${API_BASE}/api/tts-csv`, { method: 'POST', body: fd });
+        if (!res.ok) {
+          const err = await res.json().catch(()=>({detail:'Unknown error'}));
+          throw new Error(err.detail || 'Failed to generate ZIP');
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'neonvox_batch.zip';
+        document.body.appendChild(a); a.click(); a.remove();
+        el.textContent = 'ZIP downloaded!';
+      } catch (err) {
+        console.error(err);
+        el.textContent = 'Error: ' + (err.message || err);
+      }
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
